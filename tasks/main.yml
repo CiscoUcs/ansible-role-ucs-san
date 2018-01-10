@@ -1,0 +1,58 @@
+---
+# tasks file for ucs-san
+- name: UCS SAN Configuration
+
+  vars:
+    login_info: &login_info
+      hostname: "{{ ucs_hostname }}"
+      username: "{{ ucs_username }}"
+      password: "{{ ucs_password }}"
+      state: "{{ ucs_state }}"
+
+  block:
+  - name: Configure a WWNN Pool for FC Boot
+    ucs_wwn_pool:
+      <<: *login_info
+      name: "{{ item.name }}"
+      purpose: "{{ item.purpose }}"
+      order: "{{ item.order }}"
+      first_addr: "{{ item.first_addr }}"
+      last_addr: "{{ item.last_addr }}"
+    with_items: "{{ ucs_san_data.wwnn_pools }}"
+
+  - name: Configure WWPN Pools
+    ucs_wwn_pool:
+      <<: *login_info
+      name: "{{ item.name }}"
+      purpose: "{{ item.purpose }}"
+      order: "{{ item.order }}"
+      first_addr: "{{ item.first_addr }}"
+      last_addr: "{{ item.last_addr }}"
+    with_items: "{{ ucs_san_data.wwpn_pools }}"
+
+  - name: Configure Storage VSANs
+    ucs_vsans:
+      <<: *login_info
+      name: "{{ item.name }}"
+      vsan_id: "{{ item.vsan_id }}"
+      vlan_id: "{{ item.vlan_id }}"
+      fabric: "{{ item.fabric }}"
+      fc_zoning: "{{ item.fc_zoning }}"
+    with_items: "{{ ucs_san_data.vsans }}"
+
+  - name: Configure vHBA Templates
+    ucs_vhba_template:
+      <<: *login_info
+      name: "{{ item.name }}"
+      fabric: "{{ item.fabric }}"
+      vsan: "{{ item.vsan }}"
+      wwpn_pool: "{{ item.wwpn_pool }}"
+    with_items: "{{ ucs_san_data.vhba_templates }}"
+
+  - name: Configure SAN Connectivity Policy
+    ucs_san_connectivity:
+      <<: *login_info
+      name: "{{ item.name }}"
+      wwnn_pool: "{{ item.wwnn_pool }}"
+      vhba_list: "{{ item.vhba_list }}"
+    with_items: "{{ ucs_san_data.san_connectivity_policies }}"
