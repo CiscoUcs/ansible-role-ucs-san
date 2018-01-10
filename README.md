@@ -14,13 +14,13 @@ Installation
 
 There are two ways you can test this role:
 
- 1. Install it by cloning the Github repository (ensure ucs-san is is your ANSIBLE_ROLES_PATH)
+ 1. Install it by cloning the Github repository (ensure CiscoUcs.ucs-san is is your ANSIBLE_ROLES_PATH)
 
-        git clone https://github.com/ciscoucs/ansible-role-ucs-san ucs-san
+        git clone https://github.com/ciscoucs/ansible-role-ucs-san CiscoUcs.ucs-san
 
  2. Install it using the ansible-galaxy command
 
-        ansible-galaxy install ciscoucs.ucs-san
+        ansible-galaxy install CiscoUcs.ucs-san
 
 Role Variables
 --------------
@@ -38,7 +38,7 @@ tests/test.yml is an example of how to use the role:
 ---
 - hosts: localhost
   roles:
-    - ucs-san
+    - CiscoUcs.ucs-san
 ```
 
 Run the test.yml playbook with the following command:

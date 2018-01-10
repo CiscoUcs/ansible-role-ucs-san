@@ -1,4 +1,4 @@
 ---
 - hosts: localhost
   roles:
-    - ucs-san
+    - CiscoUcs.ucs-san
