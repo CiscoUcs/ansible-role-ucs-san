@@ -11,51 +11,50 @@ ucs_password: C1sco12345
 ucs_state: present
 
 # Docker EE CVD SAN related settings
-ucs_san_data:
-  wwnn_pools:
-  - name: WWNN-Pool
-    order: sequential
-    purpose: node
-    first_addr: 20:00:00:25:B5:48:00:00
-    last_addr: 20:00:00:25:B5:48:00:0F
-  wwpn_pools:
-  - name: WWPN-Pool-A
-    order: sequential
-    purpose: port
-    first_addr: 20:00:00:25:B5:48:0A:00
-    last_addr: 20:00:00:25:B5:48:0A:0F
-  - name: WWPN-Pool-B
-    order: sequential
-    purpose: port
-    first_addr: 20:00:00:25:B5:48:0B:00
-    last_addr: 20:00:00:25:B5:48:0B:0F
-  vsans:
-  - name: VSAN-A
-    vsan_id: '101'
-    vlan_id: '101' 
-    fabric: A
-    fc_zoning: enabled
-  - name: VSAN-B
-    vsan_id: '102'
-    vlan_id: '102'
-    fabric: B
-    fc_zoning: enabled
-  vhba_templates:
-  - name: vHBA-Template-A
-    fabric: A
-    vsan: VSAN-A
-    wwpn_pool: WWPN-Pool-A
-  - name: vHBA-Template-B
-    fabric: B
-    vsan: VSAN-B
-    wwpn_pool: WWPN-Pool-B
-  san_connectivity_policies:
-  - name: Cntr-FC-Boot
-    wwnn_pool: WWNN-Pool
-    vhba_list:
-    - name: Fabric-A
-      vhba_template: vHBA-Template-A
-      adapter_policy: Linux
-    - name: Fabric-B
-      vhba_template: vHBA-Template-B
-      adapter_policy: Linux
+ucs_wwnn_pools:
+- name: WWNN-Pool
+  order: sequential
+  purpose: node
+  first_addr: 20:00:00:25:B5:48:00:00
+  last_addr: 20:00:00:25:B5:48:00:0F
+ucs_wwpn_pools:
+- name: WWPN-Pool-A
+  order: sequential
+  purpose: port
+  first_addr: 20:00:00:25:B5:48:0A:00
+  last_addr: 20:00:00:25:B5:48:0A:0F
+- name: WWPN-Pool-B
+  order: sequential
+  purpose: port
+  first_addr: 20:00:00:25:B5:48:0B:00
+  last_addr: 20:00:00:25:B5:48:0B:0F
+ucs_vsans:
+- name: VSAN-A
+  vsan_id: '101'
+  vlan_id: '101' 
+  fabric: A
+  fc_zoning: enabled
+- name: VSAN-B
+  vsan_id: '102'
+  vlan_id: '102'
+  fabric: B
+  fc_zoning: enabled
+ucs_vhba_templates:
+- name: vHBA-Template-A
+  fabric: A
+  vsan: VSAN-A
+  wwpn_pool: WWPN-Pool-A
+- name: vHBA-Template-B
+  fabric: B
+  vsan: VSAN-B
+  wwpn_pool: WWPN-Pool-B
+ucs_san_connectivity_policies:
+- name: Cntr-FC-Boot
+  wwnn_pool: WWNN-Pool
+  vhba_list:
+  - name: Fabric-A
+    vhba_template: vHBA-Template-A
+    adapter_policy: Linux
+  - name: Fabric-B
+    vhba_template: vHBA-Template-B
+    adapter_policy: Linux

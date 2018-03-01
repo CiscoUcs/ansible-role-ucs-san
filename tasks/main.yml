@@ -18,7 +18,8 @@
       order: "{{ item.order }}"
       first_addr: "{{ item.first_addr }}"
       last_addr: "{{ item.last_addr }}"
-    with_items: "{{ ucs_san_data.wwnn_pools }}"
+    when: item.name is defined
+    with_items: "{{ ucs_wwnn_pools }}"
 
   - name: Configure WWPN Pools
     ucs_wwn_pool:
@@ -28,7 +29,8 @@
       order: "{{ item.order }}"
       first_addr: "{{ item.first_addr }}"
       last_addr: "{{ item.last_addr }}"
-    with_items: "{{ ucs_san_data.wwpn_pools }}"
+    when: item.name is defined
+    with_items: "{{ ucs_wwpn_pools }}"
 
   - name: Configure Storage VSANs
     ucs_vsans:
@@ -38,7 +40,8 @@
       vlan_id: "{{ item.vlan_id }}"
       fabric: "{{ item.fabric }}"
       fc_zoning: "{{ item.fc_zoning }}"
-    with_items: "{{ ucs_san_data.vsans }}"
+    when: item.name is defined
+    with_items: "{{ ucs_vsans }}"
 
   - name: Configure vHBA Templates
     ucs_vhba_template:
@@ -47,7 +50,8 @@
       fabric: "{{ item.fabric }}"
       vsan: "{{ item.vsan }}"
       wwpn_pool: "{{ item.wwpn_pool }}"
-    with_items: "{{ ucs_san_data.vhba_templates }}"
+    when: item.name is defined
+    with_items: "{{ ucs_vhba_templates }}"
 
   - name: Configure SAN Connectivity Policy
     ucs_san_connectivity:
@@ -55,4 +59,5 @@
       name: "{{ item.name }}"
       wwnn_pool: "{{ item.wwnn_pool }}"
       vhba_list: "{{ item.vhba_list }}"
-    with_items: "{{ ucs_san_data.san_connectivity_policies }}"
+    when: item.name is defined
+    with_items: "{{ ucs_san_connectivity_policies }}"
